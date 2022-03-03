@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HandSelector from "./views/HandSelector";
-import RoleSelector from "./views/RoleSelector";
+import HandSelector from "views/HandSelector";
+import RoleSelector from "views/RoleSelector";
 
 const App = () => {
   return (
