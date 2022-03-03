@@ -1,5 +1,6 @@
 h1 {
   margin: 5%;
+  font-variant: small-caps;
 }
 .options {
   display: flex;
@@ -16,6 +17,14 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
+  font-size: 4rem;
   cursor: pointer;
+  transition-duration: 0.2s;
+  color: white;
+  border: 0px;
+}
+.optionItem:hover {
+  transform: scale(1.1);
+  transition-duration: 0.5s;
+  box-shadow: black 0px 0px 15px;
 }
