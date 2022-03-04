@@ -7,7 +7,7 @@ import ConnectScreen from "views/ConnectScreen";
 import UserInfoContext from "contexts/UserInfoContext";
 
 const App = () => {
-  const { actualAddress, faucet } = useContext(UserInfoContext);
+  const { actualAddress, faucet, outcome } = useContext(UserInfoContext);
   return (
     <BrowserRouter>
       <h1>{faucet ? actualAddress : "Error connecting to account"}</h1>
@@ -17,6 +17,7 @@ const App = () => {
           <Route path="/hands" element={<HandSelector />} />
           <Route path="/" element={<RoleSelector />} />
         </Routes>
+        <h4>{outcome}</h4>
       </div>
     </BrowserRouter>
   );
