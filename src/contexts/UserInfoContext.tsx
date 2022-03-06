@@ -72,9 +72,10 @@ export const UserInfoProvider: React.FC = ({ children }) => {
     const interact = {
       getHand: () => {
         const hand = Math.floor(Math.random() * 3);
-        console.log(
-          `${role === "Deploy" ? "Alice" : "Bob"} played ${HAND[hand]}`
-        );
+        const strAction = `${role === "Deploy" ? "Alice" : "Bob"} played ${
+          HAND[hand]
+        }`;
+        console.log(strAction);
         return hand;
       },
       seeOutcome: (_outcome: number) => {
@@ -84,7 +85,7 @@ export const UserInfoProvider: React.FC = ({ children }) => {
     if (ctcInfo && role === "Attach") {
       const _ctc = account?.contract(
         backend as unknown as Backend,
-        JSON.parse(ctcInfo)
+        ctcInfo as unknown as Promise<string>
       );
 
       await backend.Bob(_ctc, interact);

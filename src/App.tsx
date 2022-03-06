@@ -17,7 +17,7 @@ const App = () => {
           <Route path="/hands" element={<HandSelector />} />
           <Route path="/" element={<RoleSelector />} />
         </Routes>
-        <h4>{outcome}</h4>
+        <h4>Outcome: {outcome}</h4>
       </div>
     </BrowserRouter>
   );
