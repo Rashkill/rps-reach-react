@@ -7,13 +7,15 @@ import { useNavigate } from "react-router-dom";
 
 const reach = loadStdlib("ETH");
 
-const HAND = ["Rock", "Paper", "Scissors"];
+export const HANDS = ["Rock", "Paper", "Scissors"];
 
 type UserInfoContextProps = {
   account?: Account;
   actualAddress?: string;
   faucet?: Account;
   role: "Deploy" | "Attach";
+  hand: number;
+  otherHand: number;
   outcome: string;
   contractInfo: string | undefined;
   loadingContract: boolean;
@@ -29,6 +31,8 @@ const UserInfoContext = createContext<UserInfoContextProps>({
   faucet: undefined,
   role: "Attach",
   outcome: "",
+  hand: 0,
+  otherHand: 0,
   contractInfo: undefined,
   loadingContract: false,
   selectRole: () => null,
@@ -46,6 +50,7 @@ export const UserInfoProvider: React.FC = ({ children }) => {
 
   const [role, setRole] = useState<"Deploy" | "Attach">("Attach");
   const [hand, setHand] = useState<number>(0);
+  const [otherHand, setOtherHand] = useState<number>(0);
   const [ctc, setCtc] = useState<Contract | undefined>(undefined);
   const [ctcInfoStr, setCtcInfoStr] = useState<string>();
   const [loadingCtc, setLoadingCtc] = useState<boolean>(false);
@@ -93,13 +98,17 @@ export const UserInfoProvider: React.FC = ({ children }) => {
     const interact = {
       getHand: () => {
         const strAction = `${role === "Deploy" ? "Host" : "Client"} played ${
-          HAND[hand]
+          HANDS[hand]
         }`;
         console.log(strAction);
         return hand;
       },
+      seeOtherHand: (_otherHand: number) => {
+        setOtherHand(_otherHand);
+      },
       seeOutcome: (_outcome: number) => {
         setOutcome(OUTCOME[_outcome]);
+        navigate("/results");
       },
     };
     if (ctcInfo && role === "Attach") {
@@ -120,6 +129,8 @@ export const UserInfoProvider: React.FC = ({ children }) => {
         faucet,
         role,
         outcome,
+        hand,
+        otherHand,
         contractInfo: ctcInfoStr,
         loadingContract: loadingCtc,
         selectRole,
