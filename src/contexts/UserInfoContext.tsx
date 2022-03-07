@@ -7,7 +7,6 @@ import { Contract } from "@reach-sh/stdlib/dist/types/ETH_like";
 const reach = loadStdlib("ETH");
 
 const HAND = ["Rock", "Paper", "Scissors"];
-const OUTCOME = ["Bob wins", "Draw", "Alice wins"];
 
 type UserInfoContextProps = {
   account?: Account;
@@ -17,7 +16,8 @@ type UserInfoContextProps = {
   outcome: string;
   contractInfo: string | undefined;
   selectRole: (role: "Deploy" | "Attach") => Promise<void> | null;
-  runAction: (action: number, ctcInfo?: string) => void;
+  selectHand: (handNumber: number) => void;
+  runAction: (ctcInfo?: string) => void;
   setContractInfo: (ctcInfo: string) => void;
 };
 
@@ -29,6 +29,7 @@ const UserInfoContext = createContext<UserInfoContextProps>({
   outcome: "",
   contractInfo: undefined,
   selectRole: () => null,
+  selectHand: () => null,
   runAction: () => null,
   setContractInfo: () => null,
 });
@@ -39,9 +40,15 @@ export const UserInfoProvider: React.FC = ({ children }) => {
   const [actualAddress, setActualAddress] = useState("Connecting...");
 
   const [role, setRole] = useState<"Deploy" | "Attach">("Attach");
+  const [hand, setHand] = useState<number>(0);
   const [ctc, setCtc] = useState<Contract | undefined>(undefined);
   const [ctcInfoStr, setCtcInfoStr] = useState<string>();
   const [outcome, setOutcome] = useState<string>("");
+  const [OUTCOME, setOUTCOME] = useState<string[]>([
+    "You lose",
+    "Draw",
+    "You win",
+  ]);
 
   useMemo(async () => {
     try {
@@ -62,17 +69,20 @@ export const UserInfoProvider: React.FC = ({ children }) => {
       console.log("Getting ContractInfo");
       setCtcInfoStr(JSON.stringify(await _ctc?.getInfo(), null, 2));
       console.log("done");
-    }
+    } else setOUTCOME(["You win", "Draw", "You lose"]);
   }
   function setContractInfo(_ctcInfoStr: string) {
     setCtcInfoStr(_ctcInfoStr);
   }
 
-  async function runAction(action: number, ctcInfo?: string) {
+  function selectHand(handNumber: number) {
+    setHand(handNumber);
+  }
+
+  async function runAction(ctcInfo?: string) {
     const interact = {
       getHand: () => {
-        const hand = Math.floor(Math.random() * 3);
-        const strAction = `${role === "Deploy" ? "Alice" : "Bob"} played ${
+        const strAction = `${role === "Deploy" ? "Host" : "Client"} played ${
           HAND[hand]
         }`;
         console.log(strAction);
@@ -102,6 +112,7 @@ export const UserInfoProvider: React.FC = ({ children }) => {
         outcome,
         contractInfo: ctcInfoStr,
         selectRole,
+        selectHand,
         runAction,
         setContractInfo,
       }}

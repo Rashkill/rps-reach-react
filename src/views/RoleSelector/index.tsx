@@ -13,20 +13,20 @@ const RoleSelector = () => {
         <button
           onClick={() => {
             selectRole("Deploy");
-            navigate("connect");
+            navigate("hands");
           }}
           className="optionItem"
         >
-          Alice
+          Create contract
         </button>
         <button
           onClick={() => {
             selectRole("Attach");
-            navigate("connect");
+            navigate("hands");
           }}
           className="optionItem"
         >
-          Bob
+          Insert contract
         </button>
       </div>
     </div>

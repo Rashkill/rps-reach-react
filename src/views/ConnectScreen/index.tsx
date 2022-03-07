@@ -6,18 +6,19 @@ const ConnectScreen = () => {
   const [ctcInfo, setCtcInfo] = useState("");
   return (
     <div>
-      <h2>You are {role}</h2>
       <h4>
         You role is to{" "}
-        {role === "Deploy" ? "deploy the backend" : "paste the contract"}
+        {role === "Deploy" ? "deploy the contract" : "paste the contract"}
       </h4>
       {role === "Deploy" ? (
-        <h5>{contractInfo && `Pass this ${contractInfo}`}</h5>
+        <h5>
+          {contractInfo && `Pass this ${contractInfo} to the other person`}
+        </h5>
       ) : (
         <input type="text" onChange={(e) => setCtcInfo(e.target.value)} />
       )}
       {!contractInfo && (
-        <button onClick={() => runAction(1, ctcInfo)}>
+        <button onClick={() => runAction(ctcInfo)}>
           {role === "Deploy" ? "Deploy" : "Send"}
         </button>
       )}

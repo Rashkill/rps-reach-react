@@ -15,6 +15,7 @@ h1 {
   margin: 5%;
   background-color: tomato;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 4rem;
@@ -26,5 +27,13 @@ h1 {
 .optionItem:hover {
   transform: scale(1.1);
   transition-duration: 0.5s;
+  transition-timing-function: cubic-bezier(0, 0.86, 0.7, 1.32);
   box-shadow: black 0px 0px 15px;
+}
+
+.optionItem.hand {
+  font-size: 0rem;
+}
+.optionItem.hand:hover {
+  font-size: 3rem;
 }
