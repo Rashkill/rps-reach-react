@@ -14,3 +14,43 @@ code {
     monospace;
   color: orange;
 }
+
+button {
+  cursor: pointer;
+  border: 0px;
+  padding: 8px 10px;
+  margin: 5px;
+  background-color: orangered;
+  color: white;
+  font-size: 1rem;
+  box-shadow: orange 0px 4px 1px;
+  transition-duration: 0.25s;
+  border-radius: 20px;
+  min-width: 100px;
+}
+
+button:hover {
+  filter: brightness(2);
+}
+button:active {
+  transform: translateY(2px) scale(1.05);
+  box-shadow: orange 0px 2px 1px;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-duration: 0.05s;
+}
+button:disabled {
+  cursor: default;
+  filter: brightness(1);
+  background-color: gray;
+  box-shadow: lightgray 0px 4px 1px;
+}
+
+input {
+  border: 0px;
+  outline: 0px;
+  padding: 8px 10px;
+  margin: 5px;
+  font-size: 0.8rem;
+  border-radius: 20px;
+  min-width: 200px;
+}

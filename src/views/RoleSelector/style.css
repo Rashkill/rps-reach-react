@@ -18,7 +18,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 4rem;
+  font-size: 3rem;
   cursor: pointer;
   transition-duration: 0.2s;
   color: white;
@@ -33,7 +33,10 @@ h1 {
 
 .optionItem.hand {
   font-size: 0rem;
+  padding: 10px;
+  background-color: transparent;
 }
 .optionItem.hand:hover {
   font-size: 3rem;
+  box-shadow: transparent 0px 0px 0px 0px;
 }

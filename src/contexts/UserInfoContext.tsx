@@ -78,7 +78,6 @@ export const UserInfoProvider: React.FC = ({ children }) => {
     setRole(_role);
     navigate("/hands");
     if (_role === "Deploy") {
-      setLoadingCtc(true);
       const _ctc = account?.contract(backend as Backend);
       setCtc(_ctc);
       setCtcInfoStr(JSON.stringify(await _ctc?.getInfo(), null, 2));
@@ -95,6 +94,7 @@ export const UserInfoProvider: React.FC = ({ children }) => {
   }
 
   async function runAction(ctcInfo?: string) {
+    setLoadingCtc(true);
     const interact = {
       getHand: () => {
         const strAction = `${role === "Deploy" ? "Host" : "Client"} played ${

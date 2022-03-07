@@ -8,22 +8,22 @@ const RoleSelector = () => {
     <div>
       <h1>Role Selector</h1>
       <div className="options">
-        <button
+        <div
           onClick={() => {
             selectRole("Deploy");
           }}
           className="optionItem"
         >
           Create contract
-        </button>
-        <button
+        </div>
+        <div
           onClick={() => {
             selectRole("Attach");
           }}
           className="optionItem"
         >
           Insert contract
-        </button>
+        </div>
       </div>
     </div>
   );

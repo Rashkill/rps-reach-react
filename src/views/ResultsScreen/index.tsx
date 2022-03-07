@@ -36,7 +36,7 @@ const ResultsScreen = () => {
             : "rgba(255,50,50,0.4)",
         }}
       >
-        <h3>Oponent hand</h3>
+        <h3>Opponent hand</h3>
         <div className="handsPanel">
           {HANDS.map((name, index) => (
             <HandIcon
