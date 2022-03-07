@@ -14,4 +14,4 @@ Compiles the Reach application (you only need to do this once every time you mad
 
 ## `What do you need?`
 
-You MUST have installed [https://trufflesuite.com/ganache/index.html](**Ganache**) and [https://metamask.io/](**MetaMask**) to test without problem. Also you need to set the Ganache port to _8545_
+You MUST have installed **[Ganache](https://trufflesuite.com/ganache/index.html)** and **[MetaMask](https://metamask.io/)** to test without problem. Also you need to set the Ganache port to _8545_
