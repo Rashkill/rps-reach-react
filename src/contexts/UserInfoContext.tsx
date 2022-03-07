@@ -3,6 +3,7 @@ import * as backend from "build/index.main.mjs";
 import { Account, Backend } from "@reach-sh/stdlib/dist/types/ETH";
 import React, { createContext, useState, useMemo } from "react";
 import { Contract } from "@reach-sh/stdlib/dist/types/ETH_like";
+import { useNavigate } from "react-router-dom";
 
 const reach = loadStdlib("ETH");
 
@@ -15,6 +16,7 @@ type UserInfoContextProps = {
   role: "Deploy" | "Attach";
   outcome: string;
   contractInfo: string | undefined;
+  loadingContract: boolean;
   selectRole: (role: "Deploy" | "Attach") => Promise<void> | null;
   selectHand: (handNumber: number) => void;
   runAction: (ctcInfo?: string) => void;
@@ -28,6 +30,7 @@ const UserInfoContext = createContext<UserInfoContextProps>({
   role: "Attach",
   outcome: "",
   contractInfo: undefined,
+  loadingContract: false,
   selectRole: () => null,
   selectHand: () => null,
   runAction: () => null,
@@ -35,6 +38,8 @@ const UserInfoContext = createContext<UserInfoContextProps>({
 });
 
 export const UserInfoProvider: React.FC = ({ children }) => {
+  const navigate = useNavigate();
+
   const [account, setAccount] = useState<Account | undefined>(undefined);
   const [faucet, setFaucet] = useState<Account>();
   const [actualAddress, setActualAddress] = useState("Connecting...");
@@ -43,6 +48,7 @@ export const UserInfoProvider: React.FC = ({ children }) => {
   const [hand, setHand] = useState<number>(0);
   const [ctc, setCtc] = useState<Contract | undefined>(undefined);
   const [ctcInfoStr, setCtcInfoStr] = useState<string>();
+  const [loadingCtc, setLoadingCtc] = useState<boolean>(false);
   const [outcome, setOutcome] = useState<string>("");
   const [OUTCOME, setOUTCOME] = useState<string[]>([
     "You lose",
@@ -59,16 +65,19 @@ export const UserInfoProvider: React.FC = ({ children }) => {
     } catch (error) {
       setActualAddress(`Error connecting to wallet`);
     }
+    navigate("/");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function selectRole(_role: "Deploy" | "Attach") {
     setRole(_role);
+    navigate("/hands");
     if (_role === "Deploy") {
+      setLoadingCtc(true);
       const _ctc = account?.contract(backend as Backend);
       setCtc(_ctc);
-      console.log("Getting ContractInfo");
       setCtcInfoStr(JSON.stringify(await _ctc?.getInfo(), null, 2));
-      console.log("done");
+      setLoadingCtc(false);
     } else setOUTCOME(["You win", "Draw", "You lose"]);
   }
   function setContractInfo(_ctcInfoStr: string) {
@@ -77,6 +86,7 @@ export const UserInfoProvider: React.FC = ({ children }) => {
 
   function selectHand(handNumber: number) {
     setHand(handNumber);
+    navigate("/connect");
   }
 
   async function runAction(ctcInfo?: string) {
@@ -111,6 +121,7 @@ export const UserInfoProvider: React.FC = ({ children }) => {
         role,
         outcome,
         contractInfo: ctcInfoStr,
+        loadingContract: loadingCtc,
         selectRole,
         selectHand,
         runAction,

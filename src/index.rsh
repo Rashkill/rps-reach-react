@@ -3,6 +3,7 @@
 const Player = {
   getHand: Fun([], UInt),
   seeOutcome: Fun([UInt], Null),
+  seeOtherHand: Fun([UInt], Null),
 };
 
 export const main = Reach.App(() => {
@@ -28,6 +29,8 @@ export const main = Reach.App(() => {
   const outcome = (handAlice + (4 - handBob)) % 3;
   commit();
 
+  Alice.interact.seeOtherHand(handBob);
+  Bob.interact.seeOtherHand(handAlice);
   each([Alice, Bob], () => {
     interact.seeOutcome(outcome);
   });

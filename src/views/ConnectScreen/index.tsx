@@ -11,9 +11,12 @@ const ConnectScreen = () => {
         {role === "Deploy" ? "deploy the contract" : "paste the contract"}
       </h4>
       {role === "Deploy" ? (
-        <h5>
-          {contractInfo && `Pass this ${contractInfo} to the other person`}
-        </h5>
+        contractInfo && (
+          <h5>
+            Pass this contract info: <code>{contractInfo}</code> to the other
+            person
+          </h5>
+        )
       ) : (
         <input type="text" onChange={(e) => setCtcInfo(e.target.value)} />
       )}
